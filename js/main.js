@@ -24,7 +24,7 @@ window.onload = function(){
         //FUNCIÓN PARA CREAR ELEMENTOS DEL JUEGO
         create: function(){
             
-            this.game.world.setBounds(0,0,1920,1080); //SE DECLARAN LOS LÍMITES DEL JUEGO
+            this.game.world.setBounds(0,0,3726,3072); //SE DECLARAN LOS LÍMITES DEL JUEGO
             this.add.sprite(0,0,"backdrop");
             
             var canvas = window.document.getElementsByTagName('canvas')[0],
@@ -68,13 +68,13 @@ window.onload = function(){
     });
     
     //SE CREA EL TEXTO DEL PUNTAJE
-    this.ScoreText = this.add.text((game.width/2),50,"PUNTAJE "+this.cont,{ font: "32px Arial", fill: "#f26c4f", align: "left" });   
+    this.ScoreText = this.add.text((game.width/2),50,"PUNTAJE "+this.cont,{ font: "32px Arial", fill: "	#FFFFFF", align: "left" });   
     this.ScoreText.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
     this.ScoreText.cameraOffset.setTo((game.width/2),50); //SE QUEDA FIJA EN ESA POSICIÓN DE LA PANTALLA
     
     
     //SE CREA EL PORCENTAJE DE LA VIDA
-    this.Vida = this.add.text(32,32,"Energia: "+this.life+"%",{font: "20px Arial", fill: "#f26c4f", align: "left"});
+    this.Vida = this.add.text(32,32,"Energia: "+this.life+"%",{font: "20px Arial", fill: "#FFFFFF", align: "left"});
     this.Vida.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
     this.Vida.cameraOffset.setTo(32,32); //SE QUEDA FIJO EL TEXTO EN ESA POSICIÓN
             
@@ -138,9 +138,9 @@ window.onload = function(){
         //FUNCIÓN PARA REUBICAR LOS ELEMENTOS DE LA PANTALLA EN CASO QUE LA RESOLUCIÓN CAMBIE
         resize: function(){
             //REUBICANDO EL TEXTO DE ScoreText
-            this.ScoreText.x = Math.round((game.width-this.ScoreText.width)/2);
-            this.ScoreText.Y = Math.round((game.height-this.ScoreText.height)/2);
-            this.ScoreText.cameraOffset.setTo(this.ScoreText.x,this.ScoreText.y);
+            this.ScoreText.x = Math.round(game.width/2);
+            //this.ScoreText.Y = 50;
+            this.ScoreText.cameraOffset.setTo(this.ScoreText.x,50);
         }
     };
     

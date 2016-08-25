@@ -16,7 +16,7 @@ BasicGame.Preloader.prototype = {
     //FUNCIÓN DEL ESTADO PARA PRECARGAR ASSETS
     preload: function(){
         
-        this.load.image("backdrop","assets/HD-Game-Wallpaper-HD-Wallpapers_ndjuLSA.jpg");
+        this.load.image("backdrop","assets/juego1_vzla_full_3726x3072px.jpg");
         this.load.image("points","assets/points.png");
     },
     //FUNCIÓN DEL ESTADO PARA CREAR ELEMENTOS YA CARGADOS ANTERIORMENTE

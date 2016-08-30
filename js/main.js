@@ -5,7 +5,9 @@ window.onload = function(){
     var game = new Phaser.Game("100%","100%",Phaser.AUTO,"game");
     
     
+    var worldscale = 1; //VARIABLE PARA ESCALAR EL ZOOM
     
+
      //SE DECLARA EL ESTADO DEL JUEGO COMO TAL 
     BasicGame.TheGame = function(game){
         
@@ -13,6 +15,11 @@ window.onload = function(){
         this.life = 100; //CONTADOR PARA LA VIDA DEL USUARIO
         this.ScoreText = "";
         this.Vida = "";
+        this.zoomPlus = ""; //TEXTO PARA AUMENTAR EL ZOOM
+        this.zoomLess = ""; //TEXTO PARA DISMINUIR EL ZOOM
+        
+        this.NombreGame = "";
+        
         this.sprite1 = null;
         this.sprite2 = null;
         this.sprite3 = null;
@@ -67,16 +74,25 @@ window.onload = function(){
     	mouseDown = false;
     });
     
+            
+    //SE CREA EL TEXTO DEL NOMBRE DEL JUEGO
+
+    this.NombreGame = this.add.text(32,32,"Reto El Universal",{font: "20px Arial", fill: "#FFFFFF", align: "left"});
+    this.NombreGame.fixedToCamera = true;
+    this.NombreGame.cameraOffset.setTo(32,32);
+            
+            
+            
     //SE CREA EL TEXTO DEL PUNTAJE
-    this.ScoreText = this.add.text((game.width/2),50,"PUNTAJE "+this.cont,{ font: "32px Arial", fill: "	#FFFFFF", align: "left" });   
+    this.ScoreText = this.add.text(32,88,"PUNTAJE "+this.cont,{ font: "20px Arial", fill: "	#FFFFFF", align: "left" });   
     this.ScoreText.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
-    this.ScoreText.cameraOffset.setTo((game.width/2),50); //SE QUEDA FIJA EN ESA POSICIÓN DE LA PANTALLA
+    this.ScoreText.cameraOffset.setTo(32,88); //SE QUEDA FIJA EN ESA POSICIÓN DE LA PANTALLA
     
     
     //SE CREA EL PORCENTAJE DE LA VIDA
-    this.Vida = this.add.text(32,32,"Energia: "+this.life+"%",{font: "20px Arial", fill: "#FFFFFF", align: "left"});
+    this.Vida = this.add.text(32,60,"Energia: "+this.life+"%",{font: "20px Arial", fill: "#FFFFFF", align: "left"});
     this.Vida.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
-    this.Vida.cameraOffset.setTo(32,32); //SE QUEDA FIJO EL TEXTO EN ESA POSICIÓN
+    this.Vida.cameraOffset.setTo(32,60); //SE QUEDA FIJO EL TEXTO EN ESA POSICIÓN
             
     
     //CREANDO LAS ZONAS PARA ACTIVAR EVENTOS
@@ -94,6 +110,21 @@ window.onload = function(){
     this.sprite2.events.onInputDown.add(this.ClickPoint,this);
     this.sprite3.events.onInputDown.add(this.ClickPoint,this);
     
+            
+   //CREAR LOS TEXTOS DE LAS OPCIONES DEL ZOOM
+   this.zoomPlus = this.add.text(0,450,"+",{font: "40px Arial",fill: "#FFFFFF",align: "left"});
+   this.zoomPlus.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
+   this.zoomPlus.cameraOffset.setTo(0,500);
+   this.zoomPlus.inputEnabled = true; //SE LE PUEDE DAR CLICK AL TEXTO
+   this.zoomPlus.events.onInputDown.add(this.ZoomIn);
+            
+   this.zoomLess = this.add.text(0,500,"-",{font: "40px Arial",fill: "#FFFFFF",align: "left"});
+   this.zoomLess.fixedToCamera = true;
+   this.zoomLess.cameraOffset.setTo(1,550);
+   this.zoomLess.inputEnabled = true;
+   this.zoomLess.events.onInputDown.add(this.ZoomOut);
+    
+  
             
        },
     
@@ -133,14 +164,54 @@ window.onload = function(){
               game.state.start("GameOver");
           }
           
+          /*
+          if(game.input.keyboard.isDown(Phaser.Keyboard.Q)){
+              //this.worldscale += 0.05; //SE APLICA ZOOM
+              worldscale += 0.05;
+          }
+           else if(game.input.keyboard.isDown(Phaser.Keyboard.A)){
+              //this.worldscale -= 0.05; //SE APLICA ZOOM PARA ALEJAR LA CÁMARA
+               worldscale -= 0.05;
+          }
+          
+          //SE DEFINEN LOS LÍMITES PARA EL ZOOM
+          worldscale =  Phaser.Math.clamp(worldscale, 0.5, 2);
+          
+         game.world.scale.set(worldscale); //SE APLICAN LOS CAMBIOS DEL ZOOM
+         
+         */
        },
+        
+        ZoomIn: function(){
+            worldscale += 0.05;
+            
+            //SE DEFINEN LOS MÍMITES PARA EL ZOOM
+            worldscale = Phaser.Math.clamp(worldscale,0.5,2);
+            
+            game.world.scale.set(worldscale);
+        },
+        
+        ZoomOut: function(){
+            worldscale -= 0.05;
+            
+            worldscale = Phaser.Math.clamp(worldscale,0.5,2);
+            
+            game.world.scale.set(worldscale);
+        },
               
         //FUNCIÓN PARA REUBICAR LOS ELEMENTOS DE LA PANTALLA EN CASO QUE LA RESOLUCIÓN CAMBIE
         resize: function(){
             //REUBICANDO EL TEXTO DE ScoreText
             this.ScoreText.x = Math.round(game.width/2);
             //this.ScoreText.Y = 50;
-            this.ScoreText.cameraOffset.setTo(this.ScoreText.x,50);
+            this.ScoreText.cameraOffset.setTo(32,88);
+            
+            //REUBICANDO LOS TEXTOS DEL ZOOM
+            //this.zoomPlus.x = Math.round((game.width - this.zoomPlus.width));
+            this.zoomPlus.cameraOffset.setTo(0,450);
+            
+            //this.zoomLess.x = Math.round(game.width - this.zoomLess.width);
+            this.zoomLess.cameraOffset.setTo(0,500);
         }
     };
     

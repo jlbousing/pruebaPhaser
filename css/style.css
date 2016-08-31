@@ -1,0 +1,12 @@
+body {
+    background-color: black;
+}
+
+nav.navbar {
+    background-color: #ffcb08;
+    color: black;
+}
+
+nav.navbar ul.nav li {
+    color: black;
+}

@@ -114,13 +114,13 @@ window.onload = function(){
    //CREAR LOS TEXTOS DE LAS OPCIONES DEL ZOOM
    this.zoomPlus = this.add.text(0,450,"+",{font: "40px Arial",fill: "#FFFFFF",align: "left"});
    this.zoomPlus.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
-   this.zoomPlus.cameraOffset.setTo(0,500);
+   this.zoomPlus.cameraOffset.setTo(0,300);
    this.zoomPlus.inputEnabled = true; //SE LE PUEDE DAR CLICK AL TEXTO
    this.zoomPlus.events.onInputDown.add(this.ZoomIn);
             
    this.zoomLess = this.add.text(0,500,"-",{font: "40px Arial",fill: "#FFFFFF",align: "left"});
    this.zoomLess.fixedToCamera = true;
-   this.zoomLess.cameraOffset.setTo(1,550);
+   this.zoomLess.cameraOffset.setTo(1,350);
    this.zoomLess.inputEnabled = true;
    this.zoomLess.events.onInputDown.add(this.ZoomOut);
     
@@ -146,6 +146,7 @@ window.onload = function(){
               this.cont++;
               this.ScoreText.text = "PUNTAJE "+this.cont;
               document.getElementById("rsp").value = "";
+              $("#texto").modal();
           }
           else if(respuesta == "false"){
               this.life = this.life - 10;
@@ -208,10 +209,10 @@ window.onload = function(){
             
             //REUBICANDO LOS TEXTOS DEL ZOOM
             //this.zoomPlus.x = Math.round((game.width - this.zoomPlus.width));
-            this.zoomPlus.cameraOffset.setTo(0,450);
+            this.zoomPlus.cameraOffset.setTo(0,300);
             
             //this.zoomLess.x = Math.round(game.width - this.zoomLess.width);
-            this.zoomLess.cameraOffset.setTo(0,500);
+            this.zoomLess.cameraOffset.setTo(0,350);
         }
     };
     

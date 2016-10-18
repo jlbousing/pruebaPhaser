@@ -7,22 +7,23 @@ window.onload = function(){
     
     var worldscale = 1; //VARIABLE PARA ESCALAR EL ZOOM
     
+     var cont = 0; //CONTADOR PARA EL SCORE
+     var life = 100; //CONTADOR PARA LA VIDA DEL USUARIO
+     var ScoreText = "";
+     var Vida = "";
+     var zoomPlus = ""; //TEXTO PARA AUMENTAR EL ZOOM
+     var zoomLess = ""; //TEXTO PARA DISMINUIR EL ZOOM
+        
+     var NombreGame = "";
+        
+     var sprite1 = null;
+     var sprite2 = null;
+     var sprite3 = null;
 
      //SE DECLARA EL ESTADO DEL JUEGO COMO TAL 
     BasicGame.TheGame = function(game){
         
-        this.cont = 0; //CONTADOR PARA EL SCORE
-        this.life = 100; //CONTADOR PARA LA VIDA DEL USUARIO
-        this.ScoreText = "";
-        this.Vida = "";
-        this.zoomPlus = ""; //TEXTO PARA AUMENTAR EL ZOOM
-        this.zoomLess = ""; //TEXTO PARA DISMINUIR EL ZOOM
-        
-        this.NombreGame = "";
-        
-        this.sprite1 = null;
-        this.sprite2 = null;
-        this.sprite3 = null;
+       
     }
     
     //PROTOTIPO DEL ESTADO DEL JUEGO
@@ -84,47 +85,69 @@ window.onload = function(){
             
             
     //SE CREA EL TEXTO DEL PUNTAJE
-    this.ScoreText = this.add.text(32,88,"PUNTAJE "+this.cont,{ font: "20px Arial", fill: "	#FFFFFF", align: "left" });   
-    this.ScoreText.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
-    this.ScoreText.cameraOffset.setTo(32,88); //SE QUEDA FIJA EN ESA POSICIÓN DE LA PANTALLA
+    ScoreText = this.add.text(32,88,"PUNTAJE "+cont,{ font: "20px Arial", fill: "	#FFFFFF", align: "left" });   
+    ScoreText.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
+    ScoreText.cameraOffset.setTo(32,88); //SE QUEDA FIJA EN ESA POSICIÓN DE LA PANTALLA
     
     
     //SE CREA EL PORCENTAJE DE LA VIDA
-    this.Vida = this.add.text(32,60,"Energia: "+this.life+"%",{font: "20px Arial", fill: "#FFFFFF", align: "left"});
-    this.Vida.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
-    this.Vida.cameraOffset.setTo(32,60); //SE QUEDA FIJO EL TEXTO EN ESA POSICIÓN
+    Vida = this.add.text(32,60,"Energia: "+life+"%",{font: "20px Arial", fill: "#FFFFFF", align: "left"});
+    Vida.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
+    Vida.cameraOffset.setTo(32,60); //SE QUEDA FIJO EL TEXTO EN ESA POSICIÓN
             
     
     //CREANDO LAS ZONAS PARA ACTIVAR EVENTOS
-    this.sprite1 = this.add.sprite(game.world.randomX,game.world.randomY,"points");        
-    this.sprite2 = this.add.sprite(game.world.randomX,game.world.randomY,"points");
-    this.sprite3 = this.add.sprite(game.world.randomX,game.world.randomY,"points");
+    sprite1 = this.add.sprite(game.world.randomX,game.world.randomY,"points");        
+    sprite2 = this.add.sprite(game.world.randomX,game.world.randomY,"points");
+    sprite3 = this.add.sprite(game.world.randomX,game.world.randomY,"points");
             
     //CONFIGURANDO LOS POINTS PARA QUE SEAN CLICKEABLES
-    this.sprite1.inputEnabled = true;
-    this.sprite2.inputEnabled = true;
-    this.sprite3.inputEnabled = true;
+    sprite1.inputEnabled = true;
+    sprite2.inputEnabled = true;
+    sprite3.inputEnabled = true;
     
     //SE LE ASIGNA EL EVENTO CORRESPONDIENTE A LOS POINTS        
-    this.sprite1.events.onInputDown.add(this.ClickPoint,this);
-    this.sprite2.events.onInputDown.add(this.ClickPoint,this);
-    this.sprite3.events.onInputDown.add(this.ClickPoint,this);
+   sprite1.events.onInputDown.add(this.ClickPoint,this);
+   sprite2.events.onInputDown.add(this.ClickPoint,this);
+   sprite3.events.onInputDown.add(this.ClickPoint,this);
     
             
    //CREAR LOS TEXTOS DE LAS OPCIONES DEL ZOOM
-   this.zoomPlus = this.add.text(0,450,"+",{font: "40px Arial",fill: "#FFFFFF",align: "left"});
-   this.zoomPlus.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
-   this.zoomPlus.cameraOffset.setTo(0,300);
-   this.zoomPlus.inputEnabled = true; //SE LE PUEDE DAR CLICK AL TEXTO
-   this.zoomPlus.events.onInputDown.add(this.ZoomIn);
+   zoomPlus = this.add.text(0,450,"+",{font: "40px Arial",fill: "#FFFFFF",align: "left"});
+   zoomPlus.fixedToCamera = true; //EL TEXTO SE MUEVE JUNTO A LA CÁMARA
+   zoomPlus.cameraOffset.setTo(0,300);
+   zoomPlus.inputEnabled = true; //SE LE PUEDE DAR CLICK AL TEXTO
+   zoomPlus.events.onInputDown.add(this.ZoomIn);
             
-   this.zoomLess = this.add.text(0,500,"-",{font: "40px Arial",fill: "#FFFFFF",align: "left"});
-   this.zoomLess.fixedToCamera = true;
-   this.zoomLess.cameraOffset.setTo(1,350);
-   this.zoomLess.inputEnabled = true;
-   this.zoomLess.events.onInputDown.add(this.ZoomOut);
+   zoomLess = this.add.text(0,500,"-",{font: "40px Arial",fill: "#FFFFFF",align: "left"});
+   zoomLess.fixedToCamera = true;
+   zoomLess.cameraOffset.setTo(1,350);
+   zoomLess.inputEnabled = true;
+   zoomLess.events.onInputDown.add(this.ZoomOut);
     
-  
+  //CODIGO PARA VALIDAR LA ENTRADA DE DATOS DEL USUARIO
+    
+    var ValidarRespuesta = function(){
+        console.log("ENTRO EN LA FUNCION!!!!!!!!!!!");
+          var respuesta = document.getElementById("rsp").value;
+          
+          if(respuesta == "true"){
+              cont++;
+              ScoreText.text = "PUNTAJE "+cont;
+              document.getElementById("rsp").value = "";
+              $("#texto").modal();
+          }
+          else if(respuesta == "false"){
+              life = life - 10;
+              Vida.text = "Energia "+life+"%";
+              document.getElementById("rsp").value = "";
+          }
+    }   
+            
+    $("#rspButton").click(function(){
+        var click = document.getElementById("rspButton");
+        click.addEventListener("click",ValidarRespuesta);
+    });
             
        },
     
@@ -140,6 +163,7 @@ window.onload = function(){
         //FUNCIÓN PARA VALIDAR LAS RESPUESTA DEL ACERTIJO, DEPENDIENDO DE SU VALOR AFECTA AL JUGADOR
       ValidarRsp: function() {
           
+          console.log("ENTRO EN LA FUNCION!!!!!!!!!!!");
           var respuesta = document.getElementById("rsp").value;
           
           if(respuesta == "true"){
@@ -153,15 +177,18 @@ window.onload = function(){
               this.Vida.text = "Energia "+this.life+"%";
               document.getElementById("rsp").value = "";
           }
-      },
+      }, 
         
         //FUNCIÓN PARA ACTUALIZAR CAMBIOS EN EL JUEGO 
       update: function(){
             
-          var click = document.getElementById("rspButton");
-          click.addEventListener("click",this.ValidarRsp());
+          var InputValidator = false; //SE DESACTIVA EL VALIDADOR DEL INPUT 
           
-          if(this.life <= 0){
+          //var click = document.getElementById("rspButton");
+          //click.addEventListener("click",this.ValidarRsp());
+          
+          
+          if(life <= 0){
               game.state.start("GameOver");
           }
           
@@ -203,16 +230,16 @@ window.onload = function(){
         //FUNCIÓN PARA REUBICAR LOS ELEMENTOS DE LA PANTALLA EN CASO QUE LA RESOLUCIÓN CAMBIE
         resize: function(){
             //REUBICANDO EL TEXTO DE ScoreText
-            this.ScoreText.x = Math.round(game.width/2);
+            ScoreText.x = Math.round(game.width/2);
             //this.ScoreText.Y = 50;
-            this.ScoreText.cameraOffset.setTo(32,88);
+            ScoreText.cameraOffset.setTo(32,88);
             
             //REUBICANDO LOS TEXTOS DEL ZOOM
             //this.zoomPlus.x = Math.round((game.width - this.zoomPlus.width));
-            this.zoomPlus.cameraOffset.setTo(0,300);
+            zoomPlus.cameraOffset.setTo(0,300);
             
             //this.zoomLess.x = Math.round(game.width - this.zoomLess.width);
-            this.zoomLess.cameraOffset.setTo(0,350);
+            zoomLess.cameraOffset.setTo(0,350);
         }
     };
     

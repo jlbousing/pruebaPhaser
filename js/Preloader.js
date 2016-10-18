@@ -21,9 +21,9 @@ BasicGame.Preloader.prototype = {
     },
     //FUNCIÓN DEL ESTADO PARA CREAR ELEMENTOS YA CARGADOS ANTERIORMENTE
     create: function(){
-        var loadingbar = this.add.sprite(0,0,"loading");
+        var loadingbar = this.add.sprite(this.game.world.centerX,this.game.world.centerY,"loading");
         loadingbar.anchor.setTo(0.5,1);
-        this.load.setPreloadSprite(loadingbar,0);
+        this.load.setPreloadSprite(loadingbar);
         this.state.start("TheGame");
     }
     
